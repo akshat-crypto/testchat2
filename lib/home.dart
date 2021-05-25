@@ -44,9 +44,11 @@ class _HomeState extends State<Home> {
           onPressed: () => {},
           backgroundColor: Colors.white,
           child: Image(
-            image: AssetImage('images/mail2.png'),
-            height: 40,
+            image: AssetImage('images/mail3.png'),
+            height: 130,
             width: 40,
+            //height: MediaQuery.of(context).size.height,
+            //width: MediaQuery.of(context).size.height,
           ),
         ),
         drawer: SideDrawer(),
