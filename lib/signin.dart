@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'auth.dart';
+import 'home.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -8,6 +14,62 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  bool _isGoogleLogging = false;
+
+  void _signInWithGoogle() async {
+    final googleSignIn = GoogleSignIn();
+    final firebaseAuth = FirebaseAuth.instance;
+    try {
+      final GoogleSignInAccount googleUser = await googleSignIn.signIn();
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      setState(() {
+        _isGoogleLogging = true;
+      });
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
+      final user = (await firebaseAuth.signInWithCredential(credential)).user;
+      await FirebaseDatabase.instance
+          .reference()
+          .child("User Information")
+          .child(FirebaseAuth.instance.currentUser.uid)
+          .update({
+        "name": googleUser.displayName,
+        "email": googleUser.email,
+        "imageURL": googleUser.photoUrl,
+        'userName': googleUser.email.toString().replaceAll('@gmail.com', '')
+      });
+
+      if (user != null) {
+        setState(() {
+          _isGoogleLogging = false;
+        });
+
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          ),
+        );
+      } else {
+        setState(() {
+          _isGoogleLogging = false;
+        });
+        Fluttertoast.showToast(msg: "Something went wrong");
+      }
+    } catch (e) {
+      print(e);
+      setState(() {
+        _isGoogleLogging = false;
+      });
+      print("------------------------");
+      print(e);
+      print("------------------------");
+      Fluttertoast.showToast(msg: "Something went wrong");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,18 +122,23 @@ class _SignInState extends State<SignIn> {
               SizedBox(
                 height: 40,
               ),
-              MaterialButton(
+              // ignore: deprecated_member_use
+              RaisedButton(
                 onPressed: () {
-                  AuthMethods().signInWithGoogle(context);
+                  _signInWithGoogle();
                 },
                 color: Colors.grey,
-                child: Text(
-                  'SIGNIN WITH GOOGLE',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
+                child: _isGoogleLogging
+                    ? SpinKitThreeBounce(
+                        color: Colors.white,
+                      )
+                    : Text(
+                        'SIGNIN WITH GOOGLE',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
             ],
           ),

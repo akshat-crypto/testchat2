@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_database/firebase_database.dart';
+
+import 'home.dart';
 
 //import '../home.dart';
 
@@ -23,6 +26,8 @@ class AuthMethods {
   getCurrentUser() async {
     return await auth.currentUser;
   }
+  
+
 
   signInWithGoogle(BuildContext context) async {
     final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -47,20 +52,25 @@ class AuthMethods {
 
     //now to store the user google account data to our firestore data
     if (result != null) {
-      SharedPreferenceHelper().saveUserEmail(userDetails.email);
-      SharedPreferenceHelper().saveUserId(userDetails.uid);
-      SharedPreferenceHelper()
-          .saveUserName(userDetails.email.replaceAll("@gmail.com", ""));
-      // .saveUserName(userDetails.email.contains("@je"))
-      SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
-      SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
+      String email = result.user.email;
+      String userName =
+          result.user.email.toString().replaceAll('@gmail.com', '');
+      String name = result.user.displayName;
+      String imageUrl = result.user.photoURL;
+      // SharedPreferenceHelper().saveUserEmail(userDetails.email);
+      // SharedPreferenceHelper().saveUserId(userDetails.uid);
+      // SharedPreferenceHelper()
+      //     .saveUserName(userDetails.email.replaceAll("@gmail.com", ""));
+      // // .saveUserName(userDetails.email.contains("@je"))
+      // SharedPreferenceHelper().saveDisplayName(userDetails.displayName);
+      // SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
 
       Map<String, dynamic> userInfoMap = {
-        "email": userDetails.email,
+        "email": email,
         //replace the @gmail.com part
-        "username": userDetails.email.replaceAll("@gmail.com", ""),
-        "name": userDetails.displayName,
-        "imgUrl": userDetails.photoURL
+        "username": userName,
+        "name": name,
+        "imgUrl": imageUrl
       };
       // if (!userDetails.email.contains('@mnit.ac.in')) {
       //   FirebaseAuth.instance.currentUser.delete();
@@ -70,6 +80,15 @@ class AuthMethods {
       //   Fluttertoast.showToast(msg: 'You are not autherized to login');
       //   return;
       // }
+      FirebaseDatabase.instance
+          .reference()
+          .child('UserInformation')
+          .child(result.user.uid)
+          .update(userInfoMap)
+          .then((value) {
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+      });
 
       /*
       DatabaseMethods()

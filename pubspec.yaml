@@ -33,9 +33,9 @@ dependencies:
   google_sign_in:
   shared_preferences:
   random_string:
-  cloud_firestore:
   fluttertoast:
   firebase_database:
+  flutter_spinkit:
 
 dev_dependencies:
   flutter_test:

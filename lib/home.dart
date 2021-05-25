@@ -44,7 +44,10 @@ class _HomeState extends State<Home> {
         floatingActionButton: FloatingActionButton(
           onPressed: () => {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => ChatScreen()))
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(),
+                ))
           },
           backgroundColor: Colors.white,
           child: Image(

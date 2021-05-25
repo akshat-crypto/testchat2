@@ -84,9 +84,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
+          
+          // isSearching ? Center(child: CircularProgressIndicator(),) : 
         ),
       ),
     );
