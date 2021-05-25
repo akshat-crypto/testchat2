@@ -20,6 +20,8 @@ class MyApp extends StatefulWidget {
 final FirebaseAuth auth = FirebaseAuth.instance;
 var user = auth.currentUser;
 
+//var user2 = AuthMethods().getCurrentUser();
+
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,8 @@ class _MyAppState extends State<MyApp> {
       home: FutureBuilder(
           future: AuthMethods().getCurrentUser(),
           builder: (context, AsyncSnapshot<dynamic> snapshot) {
-            if (user.uid != null) {
+            //if (user.uid != null) {
+            if (snapshot.hasData) {
               return Home();
             } else {
               return SignIn();

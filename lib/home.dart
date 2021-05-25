@@ -1,3 +1,4 @@
+import 'package:chat2/chatscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:chat2/drawer.dart';
 
@@ -41,7 +42,10 @@ class _HomeState extends State<Home> {
         ),
         body: HomeBody(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => {},
+          onPressed: () => {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => ChatScreen()))
+          },
           backgroundColor: Colors.white,
           child: Image(
             image: AssetImage('images/mail3.png'),
