@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "255206079376",
+    "firebase_url": "https://chat2-f8abd-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "chat2-f8abd",
     "storage_bucket": "chat2-f8abd.appspot.com"
   },
@@ -13,6 +14,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "255206079376-5bfbhr30oc0vadivldlrkbdosjnnhhuv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.test2.chat2",
+            "certificate_hash": "9ef90521eb5585937e3b0b4c77dedf7b0d6aac11"
+          }
+        },
         {
           "client_id": "255206079376-5mp91btim25cotljq8p6a3tn2mot6ldn.apps.googleusercontent.com",
           "client_type": 1,

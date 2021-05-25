@@ -36,6 +36,8 @@ dependencies:
   fluttertoast:
   firebase_database:
   flutter_spinkit:
+  google_fonts:
+  profanity_filter: ^1.0.4
 
 dev_dependencies:
   flutter_test:
