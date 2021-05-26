@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
             //if (user.uid != null) {
             if (snapshot.hasData) {
               //return Home();
-              return DetailForm();
+              return Home();
             } else {
               return SignIn();
             }

@@ -1,3 +1,4 @@
+import 'package:chat2/detailform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +44,23 @@ class _SignInState extends State<SignIn> {
       });
 
       if (user != null) {
+        final data = await FirebaseDatabase.instance
+            .reference()
+            .child('UserInformation')
+            .child(FirebaseAuth.instance.currentUser.uid)
+            .once();
+        if (data.value['branch'] == null) {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => DetailForm()));
+          return;
+        }
         setState(() {
           _isGoogleLogging = false;
         });
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => SignIn(),
+            builder: (context) => Home(),
           ),
         );
       } else {

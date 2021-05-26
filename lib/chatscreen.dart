@@ -1,3 +1,8 @@
+import 'package:chat2/SocialMediaChatRoom%20(1).dart';
+import 'package:chat2/main.dart';
+import 'package:chat2/models/userInfoModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -10,13 +15,44 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController searchUserNameEditingController =
       TextEditingController();
 
+  List<UserInformation> users = [];
+  getTotalUsers() async {
+    final data = await FirebaseDatabase.instance
+        .reference()
+        .child('User Information')
+        .once();
+    if (data.value != null) {
+      final mapData = data.value as Map;
+      mapData.forEach((key, value) {
+        users.add(UserInformation(
+            id: key,
+            imageUrl: value['imageURL'],
+            email: value['email'],
+            name: value['name'],
+            userName: value['userName']));
+      });
+      setState(() {
+        users.removeWhere(
+            (element) => element.id == FirebaseAuth.instance.currentUser.uid);
+      });
+    }
+  }
+
   onSearchButtonClick() {
     isSearching = true;
     setState(() {});
   }
 
   @override
+  void initState() {
+    getTotalUsers();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Chats"),
@@ -85,10 +121,28 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ],
               ),
+              Container(
+                height: height * .8,
+                width: width,
+                child: ListView.builder(
+                    itemCount: users.length,
+                    itemBuilder: (context, index) => InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SocialMediaChat(
+                                      uid: users[index].id,
+                                      data: users[index],
+                                    )));
+                          },
+                          child: ListTile(
+                            title: Text(users[index].name),
+                          ),
+                        )),
+              )
             ],
           ),
-          
-          // isSearching ? Center(child: CircularProgressIndicator(),) : 
+
+          // isSearching ? Center(child: CircularProgressIndicator(),) :
         ),
       ),
     );
