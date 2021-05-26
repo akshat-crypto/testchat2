@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:profanity_filter/profanity_filter.dart';
 
-import '../main.dart';
+import 'main.dart';
 import 'models/chartRoom.dart';
 import 'models/userInfoModel.dart';
 

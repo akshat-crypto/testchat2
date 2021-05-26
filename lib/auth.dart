@@ -1,5 +1,6 @@
 //import 'package:chat1/helperfunctions/sharedpref.dart';
 //import 'package:chat1/services/databases.dart';
+import 'package:chat2/detailform.dart';
 import 'package:chat2/sharedpref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,8 +27,6 @@ class AuthMethods {
   getCurrentUser() async {
     return await auth.currentUser;
   }
-  
-
 
   signInWithGoogle(BuildContext context) async {
     final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -86,8 +85,9 @@ class AuthMethods {
           .child(result.user.uid)
           .update(userInfoMap)
           .then((value) {
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+        //changed to directly move to the home page
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => DetailForm()));
       });
 
       /*

@@ -1,3 +1,4 @@
+import 'package:chat2/detailform.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,8 @@ class _MyAppState extends State<MyApp> {
           builder: (context, AsyncSnapshot<dynamic> snapshot) {
             //if (user.uid != null) {
             if (snapshot.hasData) {
-              return Home();
+              //return Home();
+              return DetailForm();
             } else {
               return SignIn();
             }

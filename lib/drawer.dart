@@ -1,3 +1,4 @@
+import 'package:chat2/resources.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -44,7 +45,10 @@ class SideDrawer extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.bookmark_border),
               title: Text('Resource'),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResourcesPage()));
+              },
             ),
             SizedBox(height: 20),
             ListTile(
