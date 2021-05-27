@@ -179,7 +179,7 @@ class _SocialMediaChatState extends State<SocialMediaChat> {
                   child: chatMessageList(),
                 ),
                 Container(
-                  color: Colors.teal,
+                  //color: Colors.teal,
                   child: Row(
                     // mainAxisSize: MainAxisSize.min,
                     children: [
@@ -229,7 +229,7 @@ class _SocialMediaChatState extends State<SocialMediaChat> {
                             ? Text(
                                 'Send',
                                 style: GoogleFonts.lato(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),

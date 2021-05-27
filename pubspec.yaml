@@ -38,6 +38,7 @@ dependencies:
   flutter_spinkit:
   google_fonts:
   profanity_filter: ^1.0.4
+  syncfusion_flutter_pdfviewer:
 
 dev_dependencies:
   flutter_test:
