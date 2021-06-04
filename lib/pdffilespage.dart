@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PdfFile extends StatelessWidget {
-  final ref = FirebaseDatabase.instance.reference().child("PDFInfo").once();
-
   String year;
   String branch;
   PdfFile({this.year, this.branch});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +21,7 @@ class PdfFile extends StatelessWidget {
             ListTile(
               title: Text('TestPdf'),
               onLongPress: () {
-                print (ref);
+                print(ref);
                 print("year is: $year \n Branch is: $branch");
                 showDialog(
                   context: context,

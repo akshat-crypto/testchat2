@@ -64,11 +64,11 @@ class _SignInState extends State<SignIn> {
           _isGoogleLogging = false;
         });
 
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ),
-        );
+        // Navigator.of(context).pushReplacement(
+        //   MaterialPageRoute(
+        //     builder: (context) => Home(),
+        //   ),
+        // );
       } else {
         setState(() {
           _isGoogleLogging = false;

@@ -223,9 +223,10 @@ class _DetailFormState extends State<DetailForm> {
                       print("Branch is ${branch}");
                       print("Year is ${year}");
                       if (branch != null && year != null) {
+                        firebaseDataUpdate();
                         Navigator.pushReplacement(context,
                             MaterialPageRoute(builder: (context) => Home()));
-                        firebaseDataUpdate();
+                        //firebaseDataUpdate();
                       }
                       // if (_formKey.currentState.validate()) {
                       //   // If the form is valid, display a Snackbar.
