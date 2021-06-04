@@ -1,4 +1,5 @@
 import 'package:chat2/chatscreen.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:chat2/drawer.dart';
 
@@ -70,8 +71,31 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+  String messageTitle = "Empty";
+  String notificationAlert = "alert";
+
+  //FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   appBar: AppBar(
+    //     title: Text('Test'),
+    //   ),
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: <Widget>[
+    //         Text(
+    //           notificationAlert,
+    //         ),
+    //         Text(
+    //           messageTitle,
+    //           style: Theme.of(context).textTheme.headline4,
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
     return Container();
   }
 }

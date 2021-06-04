@@ -4,6 +4,17 @@ class UserInformation {
   String imageUrl;
   String userName;
   String email;
-  UserInformation(
-      {this.id, this.imageUrl, this.name, this.userName, this.email});
+  String branchname;
+  String yearnumber;
+  String smp;
+  UserInformation({
+    this.id,
+    this.imageUrl,
+    this.name,
+    this.userName,
+    this.email,
+    this.branchname,
+    this.yearnumber,
+    this.smp,
+  });
 }

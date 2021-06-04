@@ -197,6 +197,7 @@ class _SocialMediaChatState extends State<SocialMediaChat> {
                             onChanged: (val) {
                               setState(() {});
                             },
+                            cursorColor: Colors.grey,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.all(10),
                               hintText: 'Start Typing....',
@@ -236,7 +237,7 @@ class _SocialMediaChatState extends State<SocialMediaChat> {
                               )
                             : Icon(
                                 Icons.send,
-                                color: Colors.blue,
+                                color: Colors.black,
                               ),
                       ),
                       SizedBox(

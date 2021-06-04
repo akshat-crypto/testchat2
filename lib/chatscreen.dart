@@ -20,20 +20,33 @@ class _ChatScreenState extends State<ChatScreen> {
     final data = await FirebaseDatabase.instance
         .reference()
         .child('User Information')
+        .orderByChild('SMP')
+        .equalTo("yes")
         .once();
+    // final data = await FirebaseDatabase.instance
+    //     .reference()
+    //     .child('User Information')
+    //     .orderByChild(key)
     if (data.value != null) {
       final mapData = data.value as Map;
       mapData.forEach((key, value) {
-        users.add(UserInformation(
+        users.add(
+          UserInformation(
             id: key,
             imageUrl: value['imageURL'],
             email: value['email'],
             name: value['name'],
-            userName: value['userName']));
+            userName: value['userName'],
+            branchname: value['branchname'],
+            yearnumber: value['yearnumber'],
+            smp: value['SMP'],
+          ),
+        );
       });
       setState(() {
         users.removeWhere(
-            (element) => element.id == FirebaseAuth.instance.currentUser.uid);
+          (element) => element.id == FirebaseAuth.instance.currentUser.uid,
+        );
       });
     }
   }
@@ -75,7 +88,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             });
                           },
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 14),
+                            padding: const EdgeInsets.only(right: 8),
                             child: Icon(Icons.arrow_back),
                           ),
                         )
@@ -125,23 +138,80 @@ class _ChatScreenState extends State<ChatScreen> {
                 height: height * .8,
                 width: width,
                 child: ListView.builder(
-                    itemCount: users.length,
-                    itemBuilder: (context, index) => InkWell(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SocialMediaChat(
-                                      uid: users[index].id,
-                                      data: users[index],
-                                    )));
-                          },
-                          child: ListTile(
-                            title: Text(users[index].name),
+                  itemCount: users.length,
+                  itemBuilder: (context, index) => InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SocialMediaChat(
+                            uid: users[index].id,
+                            data: users[index],
                           ),
-                        )),
-              )
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            child: Image.network(
+                              users[index].imageUrl,
+                              height: 35,
+                              width: 35,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                users[index].name,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                users[index].email,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Year: ${users[index].yearnumber}',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Text(
+                                'Branch: ${users[index].branchname}',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    // child: ListTile(
+                    //   title: Text(users[index].name),
+                    //   subtitle: Text(users[index].email),
+                    // ),
+                  ),
+                ),
+              ),
             ],
           ),
-
           // isSearching ? Center(child: CircularProgressIndicator(),) :
         ),
       ),
